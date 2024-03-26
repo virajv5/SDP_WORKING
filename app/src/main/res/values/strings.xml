@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SuperMarket Checkout</string>
+    <string name="web_client_id">207076573106-0gt701kmnfpmth4rtg9aj525snrm1cmv.apps.googleusercontent.com</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="trans">#00000000</color>
+    <color name="tool_bg">#ACABAB</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#FF000000</color>
+    <color name="colorPrimaryDark">#FF000000</color>
+    <color name="colorAccent">#FF000000</color>
+
+    <color name="colorSuccess">#07BF2F</color>
+    <color name="colorError">#cc0001</color>
+    <color name="colorWarning">#ffcc00</color>
+
+    <color name="purple_200">#FF000000</color>
+    <color name="grey">#ACABAB</color>
+    <color name="yellow">#ffbf00</color>
+</resources>

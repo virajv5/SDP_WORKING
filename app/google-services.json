@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "207076573106",
+    "firebase_url": "https://supermarket-checkout-68c0c-default-rtdb.firebaseio.com",
+    "project_id": "supermarket-checkout-68c0c",
+    "storage_bucket": "supermarket-checkout-68c0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207076573106:android:41f2e95184d314cebfaeab",
+        "android_client_info": {
+          "package_name": "com.maliba.diwalibaa.supermarketcheckouter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207076573106-n483o5it2bl7tavvmhujmunum1ossfrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7yof_aCChPT1byFQGuamJ9UVigq_SXqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207076573106-n483o5it2bl7tavvmhujmunum1ossfrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
