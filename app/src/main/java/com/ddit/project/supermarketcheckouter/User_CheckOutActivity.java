@@ -217,7 +217,7 @@ public class User_CheckOutActivity extends AppCompatActivity implements PaymentR
         intent.putExtra("dateTime", dateTime);
         intent.putExtra("totalAmount", Constant.pass_payment_value);
         startActivity(intent);
-        finish(); // Finish the current activity to prevent going back to the checkout page
+        finish();
     }
 
 
