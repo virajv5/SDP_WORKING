@@ -3,6 +3,7 @@ package com.ddit.project.supermarketcheckouter;
 import static com.ddit.project.supermarketcheckouter.Constant.SHARED_USER_reward;
 import static com.ddit.project.supermarketcheckouter.Constant.update_reward;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -30,6 +31,7 @@ import com.razorpay.PaymentResultListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.ArrayList;
 import static com.ddit.project.supermarketcheckouter.Constant.SHARED_USER_ID;
 import static com.ddit.project.supermarketcheckouter.Constant.SHARED_USER_email;
@@ -207,9 +209,18 @@ public class User_CheckOutActivity extends AppCompatActivity implements PaymentR
 
     @Override
     public void onPaymentSuccess(String s) {
-        Toast.makeText(this, "Payment is successful : " + s, Toast.LENGTH_SHORT).show();
-        finish();
+        String userEmail = pref.getStringvalue(SHARED_USER_email);
+        String dateTime = java.text.DateFormat.getDateTimeInstance().format(new Date());
+
+        Intent intent = new Intent(User_CheckOutActivity.this, ProcessPaymentActivity.class);
+        intent.putExtra("userEmail", userEmail);
+        intent.putExtra("dateTime", dateTime);
+        intent.putExtra("totalAmount", Constant.pass_payment_value);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent going back to the checkout page
     }
+
+
 
     @Override
     public void onPaymentError(int i, String s) {
