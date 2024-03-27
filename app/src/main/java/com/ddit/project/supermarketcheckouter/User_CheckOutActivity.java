@@ -227,4 +227,5 @@ public class User_CheckOutActivity extends AppCompatActivity implements PaymentR
         Toast.makeText(this, "Payment Failed due to error : " + s, Toast.LENGTH_SHORT).show();
     }
 
+
 }
