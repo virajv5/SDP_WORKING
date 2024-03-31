@@ -133,6 +133,7 @@ public class User_CheckOutActivity extends AppCompatActivity implements PaymentR
                     loading_cardview.setVisibility(View.GONE);
                     Toast.makeText(User_CheckOutActivity.this, "Please Try Again!", Toast.LENGTH_SHORT).show();
                 }
+
             });
 
         });
