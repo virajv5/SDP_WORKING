@@ -2,7 +2,9 @@ package com.ddit.project.supermarketcheckouter;
 
 import static com.ddit.project.supermarketcheckouter.Constant.SHARED_USER_ID;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,7 +24,7 @@ import com.ddit.project.supermarketcheckouter.Models.User;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Admin_UserListActivity extends AppCompatActivity{
+public class Admin_UserListActivity extends AppCompatActivity implements UserListAdapter.OnUserClickListener {
 
     PrefStorageManager pref;
     String temp_user;
@@ -38,7 +40,6 @@ public class Admin_UserListActivity extends AppCompatActivity{
         pref = new PrefStorageManager(Admin_UserListActivity.this);
         temp_user = pref.getStringvaluedef(SHARED_USER_ID, "");
 
-
         loading_cardview = findViewById(R.id.loading_cardview);
         no_data_ll = findViewById(R.id.no_data_ll);
         no_data_ll.setVisibility(View.GONE);
@@ -46,7 +47,7 @@ public class Admin_UserListActivity extends AppCompatActivity{
         recview_branchlist.setHasFixedSize(true);
         recview_branchlist.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new UserListAdapter(Admin_UserListActivity.this);
+        mAdapter = new UserListAdapter(Admin_UserListActivity.this,this);
         recview_branchlist.setAdapter(mAdapter);
 
         loading_cardview.setVisibility(View.VISIBLE);
@@ -77,7 +78,7 @@ public class Admin_UserListActivity extends AppCompatActivity{
                     if (temp_user.size() > 0) {
                         loading_cardview.setVisibility(View.GONE);
                         Collections.reverse(temp_user);
-                        mAdapter.additem(temp_user);
+                        mAdapter.addItems(temp_user);
                     } else {
                         geterrorfromfirebase();
                     }
@@ -108,5 +109,14 @@ public class Admin_UserListActivity extends AppCompatActivity{
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+    @Override
+    public void onUserClick(User user) {
+//        Log.d("User_ID", user.getUserid());
+
+        // Start User_OrderListActivity with the user's ID
+        Intent intent = new Intent(this, Admin_OrderListActivity.class);
+        intent.putExtra("user_id", user.getUserid());
+        startActivity(intent);
     }
 }

@@ -49,10 +49,15 @@ public class Admin_OrderListActivity extends AppCompatActivity implements OrderA
 
         mAdapter = new OrderAdminAdapter(Admin_OrderListActivity.this, this);
         recview_branchlist.setAdapter(mAdapter);
-
-
         loading_cardview.setVisibility(View.VISIBLE);
-        getAllOrderList();
+        String userId = getIntent().getStringExtra("user_id");
+        if (userId != null) {
+            // Display orders associated with the selected user
+            getOrdersForUser(userId);
+        } else {
+            // Display all orders by default
+            getAllOrderList();
+        }
 
     }
 
@@ -94,6 +99,38 @@ public class Admin_OrderListActivity extends AppCompatActivity implements OrderA
             }
         });
     }
+    private void getOrdersForUser(String userId) {
+        FirebaseDatabase.getInstance().getReference("orders")
+                .orderByChild("user_id").equalTo(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Allorder.clear(); // Clear the list before adding new orders
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                Order_GetSet order = ds.getValue(Order_GetSet.class);
+                                Allorder.add(order);
+                            }
+
+                            if (!Allorder.isEmpty()) {
+                                loading_cardview.setVisibility(View.GONE);
+                                Collections.reverse(Allorder);
+                                mAdapter.additem(Allorder);
+                            } else {
+                                geterrorfromfirebase();
+                            }
+                        } else {
+                            geterrorfromfirebase();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        geterrorfromfirebase();
+                    }
+                });
+    }
+
 
 
     public void geterrorfromfirebase() {
@@ -116,4 +153,5 @@ public class Admin_OrderListActivity extends AppCompatActivity implements OrderA
     public void clickDetailsOrder(Order_GetSet item, int pos) {
 
     }
+
 }

@@ -14,51 +14,48 @@ import com.ddit.project.supermarketcheckouter.Models.Order_GetSet;
 import com.ddit.project.supermarketcheckouter.R;
 
 import java.util.ArrayList;
-
 public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.ViewHolder> {
 
     private ArrayList<Order_GetSet> mItems = new ArrayList<>();
+    private Context mContext;
+    private clickcallback mListener;
 
-    Context mContext;
-    clickcallback mCallback;
-
-    public OrderAdminAdapter(Context context, clickcallback mback) {
+    public OrderAdminAdapter(Context context, clickcallback listener) {
         mContext = context;
-        mCallback = mback;
+        mListener = listener;
     }
 
     public void additem(ArrayList<Order_GetSet> items) {
-        mItems = new ArrayList<>();
-        mItems = items;
+        mItems.clear();
+        mItems.addAll(items);
         notifyDataSetChanged();
     }
 
     public void removeitem(int pos) {
-        if (mItems != null && mItems.size() > 0) {
+        if (pos >= 0 && pos < mItems.size()) {
             mItems.remove(pos);
-            notifyDataSetChanged();
+            notifyItemRemoved(pos);
         }
+    }
 
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_orderlist_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_orderlist_item, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setData(mItems.get(position));
     }
-
 
     @Override
     public int getItemCount() {
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView approve_tv;
         TextView ondate_tv;
@@ -68,7 +65,7 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
         TextView order_id;
         TextView username_tv;
 
-        private ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             approve_tv = itemView.findViewById(R.id.approve_tv);
             ondate_tv = itemView.findViewById(R.id.ondate_tv);
@@ -77,6 +74,7 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
             amount = itemView.findViewById(R.id.amount);
             order_id = itemView.findViewById(R.id.order_id);
             username_tv = itemView.findViewById(R.id.username_tv);
+            itemView.setOnClickListener(this);
         }
 
         void setData(Order_GetSet item) {
@@ -91,17 +89,18 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
             } else {
                 order_status.setTextColor(mContext.getResources().getColor(R.color.colorError));
             }
+        }
 
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                mListener.clickDetailsOrder(mItems.get(position), position);
+            }
         }
     }
 
     public interface clickcallback {
-        public void clickDetailsOrder(Order_GetSet item, int pos);
-
-    }
-
-    public void DeleteItem(int pos) {
-
-
+        void clickDetailsOrder(Order_GetSet item, int pos);
     }
 }

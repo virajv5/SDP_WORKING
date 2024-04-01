@@ -21,21 +21,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     private ArrayList<User> mItems = new ArrayList<>();
-    Context mContext;
+    private Context mContext;
+    private OnUserClickListener mListener;
 
-    public UserListAdapter(Context context) {
+    public UserListAdapter(Context context, OnUserClickListener listener) {
         mContext = context;
+        mListener = listener;
     }
 
-    public void additem(ArrayList<User> items) {
-        mItems = new ArrayList<>();
+    public void addItems(ArrayList<User> items) {
         mItems = items;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_userlist_item, parent, false));
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_userlist_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -43,29 +45,41 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         holder.setData(mItems.get(position));
     }
 
-
     @Override
     public int getItemCount() {
         return mItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        CircleImageView user_image;
-        TextView user_name;
-        TextView user_email;
+        CircleImageView userImage;
+        TextView userName;
+        TextView userEmail;
 
-        private ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            user_image =  itemView.findViewById(R.id.user_image);
-            user_name =  itemView.findViewById(R.id.user_name);
-            user_email =  itemView.findViewById(R.id.user_email);
+            userImage = itemView.findViewById(R.id.user_image);
+            userName = itemView.findViewById(R.id.user_name);
+            userEmail = itemView.findViewById(R.id.user_email);
+            itemView.setOnClickListener(this);
         }
 
         void setData(User item) {
-            user_name.setText(item.getName());
-            user_email.setText(item.getEmail());
-            Glide.with(mContext).load(item.getPhotourl()).error(R.drawable.user_default).into(user_image);
+            userName.setText(item.getName());
+            userEmail.setText(item.getEmail());
+            Glide.with(mContext).load(item.getPhotourl()).error(R.drawable.user_default).into(userImage);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                mListener.onUserClick(mItems.get(position));
+            }
+        }
+    }
+
+    public interface OnUserClickListener {
+        void onUserClick(User user);
     }
 }
