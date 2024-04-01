@@ -63,7 +63,7 @@ public class User_OrderListActivity extends AppCompatActivity implements OrderAd
 
 
     private void getAllOrderList() {
-        FirebaseDatabase.getInstance().getReference("order").orderByChild("user_id").equalTo(temp_user).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("orders").orderByChild("user_id").equalTo(temp_user).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {

@@ -58,7 +58,7 @@ public class Admin_OrderListActivity extends AppCompatActivity implements OrderA
 
 
     private void getAllOrderList() {
-        FirebaseDatabase.getInstance().getReference("order").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("orders").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {

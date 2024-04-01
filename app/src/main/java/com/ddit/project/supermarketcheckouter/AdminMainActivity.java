@@ -22,8 +22,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class AdminMainActivity extends AppCompatActivity {
-
-
     PrefStorageManager pref;
     TextView welcome_user;
     TextView logout_tc;
@@ -133,8 +131,8 @@ public class AdminMainActivity extends AppCompatActivity {
                         ((TextView) findViewById(R.id.total_product)).setText(String.valueOf(countproduct));
 
                     }
-                    if (snapshot.child("order").exists()) {
-                        long countorder = snapshot.child("order").getChildrenCount();
+                    if (snapshot.child("orders").exists()) {
+                        long countorder = snapshot.child("orders").getChildrenCount();
                         Log.e("callingcountdata", "call order count " + countorder);
                         ((TextView) findViewById(R.id.total_order)).setText(String.valueOf(countorder));
                     }

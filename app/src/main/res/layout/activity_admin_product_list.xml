@@ -44,29 +44,53 @@
 
     </LinearLayout>
 
-
+    <!-- Filter and Search -->
     <LinearLayout
+        android:id="@+id/filter_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/constraintLayout"
-        android:layout_margin="@dimen/_10sdp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/constraintLayout"
+        android:background="@color/tool_bg"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recview_branchlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/btn_dropdown"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:spinnerMode="dropdown" />
 
+        <EditText
+            android:id="@+id/search_edittext"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:hint="Search"
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
     </LinearLayout>
 
+    <!-- RecyclerView for Product List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recview_branchlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/filter_layout"
+        android:layout_margin="@dimen/_10sdp" />
+
+    <!-- No Data View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/native_container1">
+        android:layout_below="@id/native_container1">
 
         <include layout="@layout/no_data_view" />
-
     </RelativeLayout>
-
 
 </RelativeLayout>

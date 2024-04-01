@@ -223,7 +223,7 @@ public class User_CheckOutActivity extends AppCompatActivity implements PaymentR
         Gson gson = gsonBuilder.create();
         String json_product = gson.toJson(db_cart.getAllCartLists());
 
-        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("order");
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
 
         // Fetch the highest current order_id
         ordersRef.orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
