@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ddit.project.supermarketcheckouter.Models.Order_GetSet;
+import com.ddit.project.supermarketcheckouter.Product;
 import com.ddit.project.supermarketcheckouter.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.ViewHolder> {
@@ -93,14 +95,30 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
                 order_status.setTextColor(mContext.getResources().getColor(R.color.colorError));
             }
 
-            // Set product name
-            String productName = item.getProductName();
-            if (productName != null) {
-                product_name_tv.setText(productName);
+            // Parse product list JSON and extract product names
+            StringBuilder productNamesBuilder = new StringBuilder();
+            try {
+                Gson gson = new Gson();
+                Product[] products = gson.fromJson(item.getProductlist(), Product[].class);
+                for (Product product : products) {
+                    if (productNamesBuilder.length() > 0) {
+                        productNamesBuilder.append(",");
+                    }
+                    productNamesBuilder.append(product.getName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Set product names
+            String productNames = productNamesBuilder.toString();
+            if (!productNames.isEmpty()) {
+                product_name_tv.setText("Products: " + productNames);
             } else {
-                product_name_tv.setText("Product Name Not Available");
+                product_name_tv.setText("Product Names Not Available");
             }
         }
+
 
 
         @Override
