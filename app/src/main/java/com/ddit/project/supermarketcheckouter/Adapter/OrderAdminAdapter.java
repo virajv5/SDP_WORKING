@@ -95,29 +95,30 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
                 order_status.setTextColor(mContext.getResources().getColor(R.color.colorError));
             }
 
-            // Parse product list JSON and extract product names
-            StringBuilder productNamesBuilder = new StringBuilder();
+            // Parse product list JSON and extract product names and quantities
+            StringBuilder productDetailsBuilder = new StringBuilder();
             try {
                 Gson gson = new Gson();
                 Product[] products = gson.fromJson(item.getProductlist(), Product[].class);
                 for (Product product : products) {
-                    if (productNamesBuilder.length() > 0) {
-                        productNamesBuilder.append(",");
+                    if (productDetailsBuilder.length() > 0) {
+                        productDetailsBuilder.append(", ");
                     }
-                    productNamesBuilder.append(product.getName());
+                    productDetailsBuilder.append(product.getName()).append(" (Quantity: ").append(product.getProduct_items()).append(")");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            // Set product names
-            String productNames = productNamesBuilder.toString();
-            if (!productNames.isEmpty()) {
-                product_name_tv.setText("Products: " + productNames);
+            // Set product names and quantities
+            String productDetails = productDetailsBuilder.toString();
+            if (!productDetails.isEmpty()) {
+                product_name_tv.setText("Products: " + productDetails);
             } else {
                 product_name_tv.setText("Product Names Not Available");
             }
         }
+
 
 
 
