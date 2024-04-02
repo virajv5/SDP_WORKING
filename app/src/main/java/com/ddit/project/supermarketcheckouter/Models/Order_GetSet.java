@@ -1,5 +1,8 @@
 package com.ddit.project.supermarketcheckouter.Models;
 
+import com.ddit.project.supermarketcheckouter.Product;
+import com.google.gson.Gson;
+
 public class Order_GetSet {
 
     String order_id;
@@ -97,5 +100,19 @@ public class Order_GetSet {
 
     public void setAdmin_approve(String admin_approve) {
         this.admin_approve = admin_approve;
+    }
+
+    // Method to retrieve product name from JSON product list
+    public String getProductName() {
+        try {
+            Gson gson = new Gson();
+            Product[] products = gson.fromJson(productlist, Product[].class);
+            if (products != null && products.length > 0) {
+                return products[0].getName(); // Assuming there's only one product in the list
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -65,6 +65,8 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
         TextView order_id;
         TextView username_tv;
 
+        TextView product_name_tv;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             approve_tv = itemView.findViewById(R.id.approve_tv);
@@ -74,14 +76,15 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
             amount = itemView.findViewById(R.id.amount);
             order_id = itemView.findViewById(R.id.order_id);
             username_tv = itemView.findViewById(R.id.username_tv);
+            product_name_tv = itemView.findViewById(R.id.product_name_tv);
             itemView.setOnClickListener(this);
         }
 
         void setData(Order_GetSet item) {
             ondate_tv.setText(item.getOndate() + "");
             ref_id.setText(item.getPayment_refid() + "");
-            amount.setText(item.getTotal_amount() + "");
-            order_id.setText(item.getOrder_id() + "");
+            amount.setText(item.getTotal_amount());
+            order_id.setText(item.getOrder_id());
             username_tv.setText(item.getUser_name() + "");
             order_status.setText(item.getPayment_status() + "");
             if (item.getPayment_status().equals("success")) {
@@ -89,7 +92,16 @@ public class OrderAdminAdapter extends RecyclerView.Adapter<OrderAdminAdapter.Vi
             } else {
                 order_status.setTextColor(mContext.getResources().getColor(R.color.colorError));
             }
+
+            // Set product name
+            String productName = item.getProductName();
+            if (productName != null) {
+                product_name_tv.setText(productName);
+            } else {
+                product_name_tv.setText("Product Name Not Available");
+            }
         }
+
 
         @Override
         public void onClick(View v) {
